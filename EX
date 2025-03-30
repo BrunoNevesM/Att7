@@ -1,0 +1,63 @@
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming } from 'react-native-reanimated';
+import { GestureDetector, Gesture } from 'react-native-gesture-handler';
+
+const AnimatedBox = () => {
+  const scale = useSharedValue(1);
+  const rotation = useSharedValue(0);
+  const opacity = useSharedValue(1);
+  const translateY = useSharedValue(0);
+
+  const singleTap = Gesture.Tap().onEnd(() => {
+    scale.value = withSpring(1.5, { damping: 5 }, () => {
+      scale.value = withSpring(1);
+    });
+  });
+
+  const doubleTap = Gesture.Tap().numberOfTaps(2).onEnd(() => {
+    rotation.value = withSpring(rotation.value + 360);
+  });
+
+  const tripleTap = Gesture.Tap().numberOfTaps(3).onEnd(() => {
+    opacity.value = withTiming(opacity.value === 1 ? 0 : 1, { duration: 500 });
+  });
+
+  const longPress = Gesture.LongPress().onEnd(() => {
+    translateY.value = withSpring(translateY.value === 0 ? -100 : 0);
+  });
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale }, { rotate: `${rotation.value}deg` }, { translateY: translateY.value }],
+    opacity: opacity.value,
+  }));
+
+  return (
+    <GestureDetector gesture={Gesture.Exclusive(longPress, tripleTap, doubleTap, singleTap)}>
+      <Animated.View style={[styles.box, animatedStyle]} />
+    </GestureDetector>
+  );
+};
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <AnimatedBox />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+  },
+  box: {
+    width: 100,
+    height: 100,
+    backgroundColor: 'blue',
+    borderRadius: 10,
+  },
+});

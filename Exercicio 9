@@ -1,0 +1,90 @@
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { LineChart } from 'react-native-chart-kit'; // Usando uma biblioteca para o gráfico
+
+const App = () => {
+  const [temperatures, setTemperatures] = useState([]);
+
+  useEffect(() => {
+    // Aqui você pode fazer a chamada para uma API de previsão do tempo, por enquanto, estamos simulando os dados
+    setTemperatures([30, 32, 33, 31, 29, 28, 30]);
+  }, []);
+
+  const data = {
+    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+    datasets: [
+      {
+        data: temperatures,
+        color: (opacity = 1) => `rgba(255, 99, 132, ${opacity})`, // Cor da linha do gráfico
+        strokeWidth: 2,
+      },
+    ],
+  };
+
+  const screenWidth = 350; // Largura da tela do gráfico
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>Previsão do Tempo</Text>
+      
+      <LineChart
+        data={data}
+        width={screenWidth}
+        height={220}
+        chartConfig={{
+          backgroundColor: '#fff',
+          backgroundGradientFrom: '#fff',
+          backgroundGradientTo: '#fff',
+          decimalPlaces: 0,
+          color: (opacity = 1) => `rgba(0, 123, 255, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          style: {
+            borderRadius: 16,
+          },
+          propsForDots: {
+            r: '6',
+            strokeWidth: '2',
+            stroke: '#ffa726',
+          },
+        }}
+        bezier
+        style={styles.chart}
+      />
+      
+      <View style={styles.info}>
+        <Text style={styles.description}>
+          Este gráfico mostra a previsão da temperatura para os próximos 7 dias.
+        </Text>
+      </View>
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f5f5f5',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  chart: {
+    marginVertical: 8,
+    borderRadius: 16,
+  },
+  info: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  description: {
+    fontSize: 16,
+    color: '#333',
+    textAlign: 'center',
+  },
+});
+
+export default App;

@@ -1,0 +1,194 @@
+import * as React from 'react';
+import { Text, View, StyleSheet, Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+// Tela de Módulo 1
+function Modulo1() {
+  const Tab = createMaterialTopTabNavigator();
+
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Tela 1" component={Tela1} />
+      <Tab.Screen name="Tela 2" component={Tela2} />
+      <Tab.Screen name="Tela 3" component={Tela3} />
+    </Tab.Navigator>
+  );
+}
+
+// Tela de Módulo 2
+function Modulo2() {
+  const Tab = createMaterialTopTabNavigator();
+
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Tela 1" component={Tela4} />
+      <Tab.Screen name="Tela 2" component={Tela5} />
+      <Tab.Screen name="Tela 3" component={Tela6} />
+    </Tab.Navigator>
+  );
+}
+
+// Tela de Módulo 3
+function Modulo3() {
+  const Tab = createMaterialTopTabNavigator();
+
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Tela 1" component={Tela7} />
+      <Tab.Screen name="Tela 2" component={Tela8} />
+      <Tab.Screen name="Tela 3" component={Tela9} />
+    </Tab.Navigator>
+  );
+}
+
+// Tela de Módulo 1 - Tela 1
+function Tela1() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Bem-vindo ao curso!</Text>
+    </View>
+  );
+}
+
+// Tela de Módulo 1 - Tela 2
+function Tela2() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Como usar o app</Text>
+    </View>
+  );
+}
+
+// Tela de Módulo 1 - Tela 3
+function Tela3() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Dicas iniciais</Text>
+    </View>
+  );
+}
+
+// Tela de Módulo 2 - Tela 1
+function Tela4() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Capítulo 1 - Conceitos básicos</Text>
+    </View>
+  );
+}
+
+// Tela de Módulo 2 - Tela 2
+function Tela5() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Capítulo 2 - Exemplos práticos</Text>
+    </View>
+  );
+}
+
+// Tela de Módulo 2 - Tela 3
+function Tela6() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Capítulo 3 - Quiz interativo</Text>
+    </View>
+  );
+}
+
+// Tela de Módulo 3 - Tela 1
+function Tela7() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Resumo do curso</Text>
+    </View>
+  );
+}
+
+// Tela de Módulo 3 - Tela 2
+function Tela8() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Próximos passos</Text>
+    </View>
+  );
+}
+
+// Tela de Módulo 3 - Tela 3
+function Tela9() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Deixe seu feedback!</Text>
+    </View>
+  );
+}
+
+// Tela de Perfil
+function Perfil() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>👤 Perfil do Usuário</Text>
+      <Text style={styles.text}>Nome: João</Text>
+      <Text style={styles.text}>Email: joao@exemplo.com</Text>
+      <Button title="Editar Perfil" onPress={() => alert('Função de editar perfil')} />
+    </View>
+  );
+}
+
+// Tela de Configurações
+function Configuracoes() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>⚙️ Configurações</Text>
+      <Text style={styles.text}>Tema: Claro</Text>
+      <Text style={styles.text}>Notificações: Ativadas</Text>
+      <Text style={styles.text}>Idioma: Português</Text>
+    </View>
+  );
+}
+
+// Stack Navigation para Módulos
+const HomeStack = createStackNavigator();
+
+function HomeStackScreen() {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="Módulo 1" component={Modulo1} />
+      <HomeStack.Screen name="Módulo 2" component={Modulo2} />
+      <HomeStack.Screen name="Módulo 3" component={Modulo3} />
+    </HomeStack.Navigator>
+  );
+}
+
+// Drawer Navigation
+const Drawer = createDrawerNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator>
+        <Drawer.Screen name="Home" component={HomeStackScreen} />
+        <Drawer.Screen name="Perfil" component={Perfil} />
+        <Drawer.Screen name="Configurações" component={Configuracoes} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+  },
+  text: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+});
+
+export default App;
